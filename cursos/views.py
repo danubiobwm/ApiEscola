@@ -5,8 +5,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from rest_framework import permissions
+
 from .models import Curso, Avaliacao
 from .serializers import CursoSerializer, AvaliacaoSerializer
+from .permissions import EhSuperUser
 
 
 ###
@@ -49,6 +52,9 @@ class AvaliacaoAPIView(generics.RetrieveUpdateDestroyAPIView):
 ###
 
 class CursosViewSet(viewsets.ModelViewSet):
+    permissions_classes = (
+        EhSuperUser,
+        permissions.DjangoModelPermissions, )
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
@@ -69,6 +75,7 @@ class CursosViewSet(viewsets.ModelViewSet):
 class AvaliacoesViewSet(viewsets.ModelViewSet):
     queryset = Avaliacao.objects.all()
     serializer_class = AvaliacaoSerializer
+    27,8
 """
 
 
